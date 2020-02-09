@@ -1,34 +1,31 @@
 import React from 'react';
 import './container.style.scss';
-import {template} from "../../template"
-import {Customer} from "../customer/customer.component"
+import {customerTemplate} from "../../template"
+import Customer from "../customer/customer.component"
+import {get} from "../../rest-client/rest-client"
 
 class Container extends React.Component{
     constructor(props){
         super(props);
         this.state={
             title:props.title,
-            customers:template
+            customers:customerTemplate
         };
     }
 
     componentDidMount(){
-        fetch("http://www.fulek.com/nks/api/aw/customers")
-        .then(res=>res.json())
-        .then(body=>this.setState({
-            customers:body
-        }));
+        get("customers").then(body=>this.setState({customers:body}));
     }
 
     render(){
         return (
-            <div>
+            <table>
             {
                 this.state.customers.map(customer=>(
                     <Customer key={customer.Id} customer={customer}/>
                 ))
             }
-            </div>
+            </table>
         )
     }
 
