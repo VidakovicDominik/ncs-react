@@ -15,7 +15,7 @@ export function post(suffix, body, token){
 }).then(response=>response.json())
 }
 
-function login(username, password){
+export function login(username, password){
   return fetch('https:http://www.fulek.com/nks/api/aw/login', {
   method: 'POST',
   headers: {
