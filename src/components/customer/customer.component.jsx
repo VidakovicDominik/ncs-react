@@ -40,9 +40,8 @@ class Customer extends React.Component {
         this.getCustomers();
     }
 
-    deleteCustomer() {
-        console.log(this.state.customer.Id);
-        post("deletecustomer",{Id:this.state.customer.Id}).then(this.props.refresh());
+    async deleteCustomer() {
+        post("deletecustomer",JSON.stringify({Id: this.state.customer.Id})).then(await new Promise(r => setTimeout(r, 400))).then(this.props.refresh());
     }
 
     render() {
