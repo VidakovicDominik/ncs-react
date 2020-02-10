@@ -1,6 +1,5 @@
 import React from 'react';
 import './container.style.scss';
-import { customerTemplate } from "../../template"
 import Customer from "../customer/customer.component"
 import Header from "../header/header.component"
 import { get } from "../../rest-client/rest-client"
@@ -11,12 +10,18 @@ class Container extends React.Component {
         this.state = {
             currentUser: null,
             title: props.title,
-            customers: customerTemplate
+            customers: []
         };
+
+        this.getCustomers=this.getCustomers.bind(this);
     }
 
     componentDidMount() {
-        get("customers").then(body => this.setState({ customers: body }));
+        this.getCustomers();
+    }
+
+    getCustomers(){
+        get("customers").then(res=>res.json()).then(body => this.setState({ customers: body }));
     }
 
     render() {
@@ -26,7 +31,7 @@ class Container extends React.Component {
                 <table>
                     {
                         this.state.customers.map(customer => (
-                            <Customer key={customer.Id} customer={customer} />
+                            <Customer key={customer.Id} customer={customer} refresh={this.getCustomers} />
                         ))
                     }
                 </table>

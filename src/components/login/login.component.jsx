@@ -1,7 +1,7 @@
 import React from "react"
 import ReactModal from "react-modal"
 import "./login.style.scss"
-import { get, post } from "../../rest-client/rest-client"
+import { login } from "../../rest-client/rest-client"
 import Register from "../register/register.component"
 
 
@@ -9,16 +9,21 @@ class Login extends React.Component {
     constructor() {
         super();
         this.state = {
-            showRegisterModal: false
+            showRegisterModal: false,
+            username: '',
+            password: ''
         };
 
         this.showRegister = this.showRegister.bind(this);
         this.hideRegister = this.hideRegister.bind(this);
         this.login=this.login.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
     }
 
     login(){
-        
+        console.log(localStorage.getItem('token'));
+        login(JSON.stringify(this.state)).then(body=>localStorage.setItem('token', body.token)).then(this.setState({loginSuccess: true}))
     }
 
     showRegister(){
@@ -29,11 +34,15 @@ class Login extends React.Component {
         this.setState({showRegisterModal: false})
     }
 
+    handleChange(event){
+        this.setState({[event.target.name]: event.target.value});
+    }
+
     render() {
         return (
             <div>
-                <input type="text"></input>
-                <input type="password"></input>
+                <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
                 <button onClick={this.login}>Login</button>
                 <button onClick={this.showRegister}>Register</button>
                 <ReactModal
@@ -44,6 +53,7 @@ class Login extends React.Component {
                     <Register/>
                     <button onClick={this.hideRegister}>Close Modal</button>
                 </ReactModal>
+                {this.state.loginSuccess ? <label>Successfully logged in</label>: ''}
             </div>
         );
     }

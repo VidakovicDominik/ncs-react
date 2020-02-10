@@ -1,7 +1,6 @@
 import React from "react"
 import ReactModal from "react-modal"
 import "./customer.style.scss"
-import { billTemplate } from "../../template"
 import { get, post } from "../../rest-client/rest-client"
 import Bill from "../bill/bill.component"
 
@@ -10,7 +9,7 @@ class Customer extends React.Component {
         super(props);
         this.state = {
             customer: props.customer,
-            bills: billTemplate,
+            bills: [],
             showBillsModal: false
         };
 
@@ -25,7 +24,8 @@ class Customer extends React.Component {
     }
 
     getBills() {
-        get("customerBills/" + this.state.customer.Id).then(body => this.setState({ bills: body }));
+        console.log(this.state.customer.Id);
+        get("customerBills/" + this.state.customer.Id).then(res=>res.json()).then(body => this.setState({ bills: body }));
     }
 
     showBills() {
@@ -41,7 +41,8 @@ class Customer extends React.Component {
     }
 
     deleteCustomer() {
-        this.getCustomers();
+        console.log(this.state.customer.Id);
+        post("deletecustomer",{Id:this.state.customer.Id}).then(this.props.refresh());
     }
 
     render() {

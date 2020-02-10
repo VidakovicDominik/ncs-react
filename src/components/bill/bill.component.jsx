@@ -2,7 +2,6 @@ import React from "react"
 import ReactModal from "react-modal"
 import "./bill.style.scss"
 import { get, post } from "../../rest-client/rest-client"
-import { itemTemplate } from "../../template"
 import Item from "../item/item.component"
 
 
@@ -11,7 +10,7 @@ class Bill extends React.Component {
         super(props);
         this.state = {
             bill: props.bill,
-            items: itemTemplate,
+            items: [],
             showItemsModal: false
         };
 
