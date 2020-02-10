@@ -1,0 +1,45 @@
+form{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input{
+    width: 15%;
+    height: 40px;
+    text-align: center;
+    background-color:  lightgray ;
+    color:#1a2b3b;
+    border: none;
+    font-size: 1.1em;
+}
+
+label{
+    margin-right: 5px;
+    margin-left: 15px;
+}
+
+select{
+    margin-right: 15px;
+    text-align-last: center;
+}
+
+.input-container{
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80vw;
+    justify-content: space-evenly;
+}
+
+.submit {
+    width: 15%;
+    height: 40px;
+    font-size: 1em;
+    background: rgb(53, 54, 54);
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+

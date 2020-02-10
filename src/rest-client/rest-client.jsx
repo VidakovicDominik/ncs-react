@@ -1,6 +1,6 @@
 export function get(suffix){
     return fetch("http://www.fulek.com/nks/api/aw/"+suffix)
-    ;
+    .then(response=>response.json());
 }
 
 export function post(suffix, body){

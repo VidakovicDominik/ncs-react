@@ -10,7 +10,7 @@ class Customer extends React.Component {
         this.state = {
             customer: props.customer,
             bills: [],
-            showBillsModal: false
+            showBillsModal: false,
         };
 
         this.showBills = this.showBills.bind(this);
@@ -24,8 +24,7 @@ class Customer extends React.Component {
     }
 
     getBills() {
-        console.log(this.state.customer.Id);
-        get("customerBills/" + this.state.customer.Id).then(res=>res.json()).then(body => this.setState({ bills: body }));
+        get("customerBills/" + this.state.customer.Id).then(body => this.setState({ bills: body }));
     }
 
     showBills() {
@@ -41,7 +40,9 @@ class Customer extends React.Component {
     }
 
     async deleteCustomer() {
-        post("deletecustomer",JSON.stringify({Id: this.state.customer.Id})).then(await new Promise(r => setTimeout(r, 400))).then(this.props.refresh());
+        post("deletecustomer",JSON.stringify({Id: this.state.customer.Id}))
+        .then(await new Promise(r => setTimeout(r, 400)))
+        .then(this.props.refresh());
     }
 
     render() {
@@ -54,17 +55,24 @@ class Customer extends React.Component {
                 <td><button onClick={this.showBills}>Bills</button></td>
                 <td><button onClick={this.editCustomer}>Edit</button></td>
                 <td><button onClick={this.deleteCustomer}>Delete</button></td>
-                <ReactModal
+                <ReactModal 
                     isOpen={this.state.showBillsModal}
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideBills}
                     shouldCloseOnOverlayClick={true}>
+                    <table>
+                    <th>Date</th>
+                    <th>Bill Number</th>
+                    <th>Credit Card</th>
+                    <th>Seller</th>
+                    <th>Items</th>
+                    <th>Delete</th>
                     {
                         this.state.bills.map(bill => (
                             <Bill key={bill.Id} bill={bill} />
                         ))
                     }
-                    <button onClick={this.hideBills}>Close Modal</button>
+                    </table>
                 </ReactModal>
             </tr>
         );

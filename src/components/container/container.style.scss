@@ -1,0 +1,26 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #f8f8f8;
+}
+td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+th {
+  background-color: #fa8072;
+  color: white;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.filter{
+    text-align: center;
+    align-items: center;
+    margin-left: 50%;
+    margin-top: 35px;
+    transform: translate(-50%,-50%);
+}

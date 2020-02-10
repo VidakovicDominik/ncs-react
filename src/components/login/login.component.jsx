@@ -6,8 +6,8 @@ import Register from "../register/register.component"
 
 
 class Login extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             showRegisterModal: false,
             username: '',
@@ -16,26 +16,31 @@ class Login extends React.Component {
 
         this.showRegister = this.showRegister.bind(this);
         this.hideRegister = this.hideRegister.bind(this);
-        this.login=this.login.bind(this);
+        this.login = this.login.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
     }
 
-    login(){
+    login() {
         console.log(localStorage.getItem('token'));
-        login(JSON.stringify(this.state)).then(body=>localStorage.setItem('token', body.token)).then(this.setState({loginSuccess: true}))
+        login(JSON.stringify(this.state))
+            .then(this.setState({ loginSuccess: true }))
+            .then(body => {
+                localStorage.setItem('token', body.token);
+                this.props.updateUser(body.username);
+            }).catch(error=>localStorage.clear());
+
     }
 
-    showRegister(){
-        this.setState({showRegisterModal: true})
+    showRegister() {
+        this.setState({ showRegisterModal: true })
     }
 
-    hideRegister(){
-        this.setState({showRegisterModal: false})
+    hideRegister() {
+        this.setState({ showRegisterModal: false })
     }
 
-    handleChange(event){
-        this.setState({[event.target.name]: event.target.value});
+    handleChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     render() {
@@ -50,10 +55,10 @@ class Login extends React.Component {
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideRegister}
                     shouldCloseOnOverlayClick={true}>
-                    <Register/>
+                    <Register />
                     <button onClick={this.hideRegister}>Close Modal</button>
                 </ReactModal>
-                {this.state.loginSuccess ? <label>Successfully logged in</label>: ''}
+                {this.state.loginSuccess ? <label>Successfully logged in</label> : ''}
             </div>
         );
     }

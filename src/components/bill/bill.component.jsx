@@ -25,7 +25,6 @@ class Bill extends React.Component {
 
     getItems(){
         get("billitems/"+this.state.bill.Id).then(body=>this.setState({items:body}));
-
     }
 
     showItems() {
@@ -50,19 +49,23 @@ class Bill extends React.Component {
                 <td>{this.state.bill.Seller.Name + " " + this.state.bill.Seller.Surname}</td>
                 <td><button onClick={this.showItems}>Items</button></td>
                 <td><button onClick={this.deleteBill}>Delete</button></td>
-                <ReactModal
+                <ReactModal 
                     isOpen={this.state.showItemsModal}
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideItems}
                     shouldCloseOnOverlayClick={true}>
                     <table>
+                    <th>Quantity</th>
+                    <th>Full price</th>
+                    <th>Product price</th>
+                    <th>Name</th>
+                    <th>Delete</th>
                     {
                         this.state.items.map(item => (
                             <Item key={item.Id} item={item} />
                         ))
                     }
                     </table>
-                    <button onClick={this.hideItems}>Close Modal</button>
                 </ReactModal>
             </tr>
         );

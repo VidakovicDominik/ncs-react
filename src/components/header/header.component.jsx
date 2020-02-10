@@ -15,31 +15,32 @@ class Header extends React.Component {
     }
 
     componentDidMount(){
-
     }
 
     showLogin() {
         this.setState({ showLoginModal: true });
+        localStorage.clear();
     }
 
     hideLogin() {
         this.setState({ showLoginModal: false });
     }
 
+
+
     render() {
         return (
             <div className="container">
             <h1>Adventure works</h1>
                 {
-                    this.props.user ? (<button onClick={this.showLogin}>Logout</button>) : (<button onClick={this.showLogin}>Login</button>)
+                    localStorage.getItem('token') ? (<button class="ll input" onClick={this.showLogin}>Logout</button>) : (<button class="ll input" onClick={this.showLogin}>Login</button>)
                 }
                 <ReactModal
                     isOpen={this.state.showLoginModal}
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideLogin}
                     shouldCloseOnOverlayClick={true}>
-                    <Login/>
-                    <button onClick={this.hideLogin}>Close Modal</button>
+                    <Login updateUser={this.props.updateUser}/>
                 </ReactModal>
             </div>
         );
