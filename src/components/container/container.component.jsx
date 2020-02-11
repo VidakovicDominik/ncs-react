@@ -80,13 +80,15 @@ class Container extends React.Component {
             <div>
                 <Header updateUser={this.updateUser} />
                 {localStorage.getItem('token') && (<AddCustomer />)}
-                <input className="input filter" placeholder="Filter" type="text" value={this.state.filter} onChange={this.filterCustomers} />
+                <div className="filter">
+                <input className="input" placeholder="Filter" type="text" value={this.state.filter} onChange={this.filterCustomers} />
                 <select className="input" name="showCount" value={this.state.showCount} onChange={this.handleChange}>
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
+                </div>
                 <table>
                     <th onClick={this.sortCustomersByName}>Name</th>
                     <th onClick={this.sortCustomersBySurname}>Surname</th>
