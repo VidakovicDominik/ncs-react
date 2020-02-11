@@ -33,7 +33,7 @@ class Item extends React.Component {
                 <td>{this.state.item.TotalPrice}</td>
                 <td>{this.state.item.PricePerPiece}</td>
                 <td>{this.state.item.Product.Name}</td>
-                <td><button onClick={this.deleteItem}>Delete</button></td>
+                {localStorage.getItem('token') && (<td><button onClick={this.deleteItem}>Delete</button></td>)}
             </tr>
         );
     }

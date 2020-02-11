@@ -61,22 +61,22 @@ class Bill extends React.Component {
                 <td>{this.state.bill.CreditCard.Type}</td>
                 <td>{this.state.bill.Seller.Name + " " + this.state.bill.Seller.Surname}</td>
                 <td><button onClick={this.showItems}>Items</button></td>
-                <td><button onClick={this.deleteBill}>Delete</button></td>
+                {localStorage.getItem('token') && (<td><button onClick={this.deleteBill}>Delete</button></td>)}
                 <ReactModal
                     isOpen={this.state.showItemsModal}
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideItems}
                     shouldCloseOnOverlayClick={true}>
-                         {localStorage.getItem('token') && (<AddItem refresh={this.getItems} billId={this.state.bill.Id}/>)}
+                    {localStorage.getItem('token') && (<AddItem refresh={this.getItems} billId={this.state.bill.Id} />)}
                     <table>
                         <th>Quantity</th>
                         <th>Full price</th>
                         <th>Product price</th>
                         <th>Name</th>
-                        <th>Delete</th>
+                        {localStorage.getItem('token') && (<th>Delete</th>)}
                         {
                             this.state.items.map(item => (
-                                <Item key={item.Id} item={item} refresh={this.getItems}/>
+                                <Item key={item.Id} item={item} refresh={this.getItems} />
                             ))
                         }
                     </table>

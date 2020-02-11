@@ -18,8 +18,9 @@ class Header extends React.Component {
     }
 
     showLogin() {
-        this.setState({ showLoginModal: true });
         localStorage.clear();
+        this.setState({ showLoginModal: true });
+        this.props.updateUser();
     }
 
     hideLogin() {

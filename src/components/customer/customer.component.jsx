@@ -4,6 +4,7 @@ import "./customer.style.scss"
 import { get, post } from "../../rest-client/rest-client"
 import Bill from "../bill/bill.component"
 import AddBill from "../add-bill/addBill.component"
+import EditCustomer from "../edit-customer/editCustomer.component"
 
 class Customer extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Customer extends React.Component {
             customer: props.customer,
             bills: [],
             showBillsModal: false,
+            showEditModal: false
         };
 
         this.showBills = this.showBills.bind(this);
@@ -19,6 +21,9 @@ class Customer extends React.Component {
         this.deleteCustomer = this.deleteCustomer.bind(this);
         this.hideBills = this.hideBills.bind(this);
         this.getBills = this.getBills.bind(this);
+        this.showEdit = this.showEdit.bind(this);
+        this.hideEdit = this.hideEdit.bind(this);
+
     }
 
     componentDidMount() {
@@ -35,6 +40,14 @@ class Customer extends React.Component {
 
     hideBills() {
         this.setState({ showBillsModal: false });
+    }
+
+    showEdit(){
+        this.setState({showEditModal: true});
+    }
+
+    hideEdit(){
+        this.setState({showEditModal: false});
     }
 
     editCustomer() {
@@ -55,8 +68,8 @@ class Customer extends React.Component {
                 <td>{this.state.customer.Email}</td>
                 <td>{this.state.customer.Telephone}</td>
                 <td><button onClick={this.showBills}>Bills</button></td>
-                <td><button onClick={this.editCustomer}>Edit</button></td>
-                <td><button onClick={this.deleteCustomer}>Delete</button></td>
+                {localStorage.getItem('token') && (<td><button onClick={this.showEdit}>Edit</button></td>)}
+                {localStorage.getItem('token') && (<td><button onClick={this.deleteCustomer}>Delete</button></td>)}
                 <ReactModal 
                     isOpen={this.state.showBillsModal}
                     contentLabel="onRequestClose Example"
@@ -69,13 +82,20 @@ class Customer extends React.Component {
                     <th>Credit Card</th>
                     <th>Seller</th>
                     <th>Items</th>
-                    <th>Delete</th>
+                    {localStorage.getItem('token') && (<th>Delete</th>)}
                     {
                         this.state.bills.map(bill => (
                             <Bill key={bill.Id} bill={bill} refresh={this.getBills}/>
                         ))
                     }
                     </table>
+                </ReactModal>
+                <ReactModal 
+                    isOpen={this.state.showEditModal}
+                    contentLabel="onRequestClose Example"
+                    onRequestClose={this.hideEdit}
+                    shouldCloseOnOverlayClick={true}>
+                     <EditCustomer customer={this.props.customer} refresh={this.props.refresh}/>
                 </ReactModal>
             </tr>
         );
