@@ -23,12 +23,12 @@ class Customer extends React.Component {
         this.getBills = this.getBills.bind(this);
         this.showEdit = this.showEdit.bind(this);
         this.hideEdit = this.hideEdit.bind(this);
-
     }
 
     componentDidMount() {
         this.getBills();
     }
+
 
     getBills() {
         get("customerBills/" + this.state.customer.Id).then(body => this.setState({ bills: body }));

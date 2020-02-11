@@ -60,6 +60,7 @@ class Container extends React.Component {
     }
 
     getCustomers() {
+        console.log("refreshing");
         get("customers").then(body => this.setState({ customers: body }));
     }
 
