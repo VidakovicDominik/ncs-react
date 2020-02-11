@@ -1,6 +1,7 @@
 import React from "react"
 import "./item.style.scss"
 import {get, post} from "../../rest-client/rest-client"
+import Axios from "axios"
 
 class Item extends React.Component {
     constructor(props) {
@@ -12,8 +13,17 @@ class Item extends React.Component {
         this.deleteItem=this.deleteItem.bind(this);
     }
 
-    deleteItem(){
-
+    async deleteItem() {
+        Axios.post('http://www.fulek.com/nks/api/aw/deleteItem',
+            { id: this.state.item.Id },
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }
+            }).then(response => { console.log(response.data) })
+            .then(await new Promise(r => setTimeout(r, 400)))
+            .then(this.props.refresh())
+            .catch(error => console.log(error));
     }
 
     render() {

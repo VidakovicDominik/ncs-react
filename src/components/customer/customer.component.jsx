@@ -3,6 +3,7 @@ import ReactModal from "react-modal"
 import "./customer.style.scss"
 import { get, post } from "../../rest-client/rest-client"
 import Bill from "../bill/bill.component"
+import AddBill from "../add-bill/addBill.component"
 
 class Customer extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class Customer extends React.Component {
         this.editCustomer = this.editCustomer.bind(this);
         this.deleteCustomer = this.deleteCustomer.bind(this);
         this.hideBills = this.hideBills.bind(this);
+        this.getBills = this.getBills.bind(this);
     }
 
     componentDidMount() {
@@ -60,6 +62,7 @@ class Customer extends React.Component {
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideBills}
                     shouldCloseOnOverlayClick={true}>
+                     {localStorage.getItem('token') && (<AddBill customerId={this.state.customer.Id} refresh={this.getBills}/>)}
                     <table>
                     <th>Date</th>
                     <th>Bill Number</th>
@@ -69,7 +72,7 @@ class Customer extends React.Component {
                     <th>Delete</th>
                     {
                         this.state.bills.map(bill => (
-                            <Bill key={bill.Id} bill={bill} />
+                            <Bill key={bill.Id} bill={bill} refresh={this.getBills}/>
                         ))
                     }
                     </table>

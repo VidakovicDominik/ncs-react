@@ -7,9 +7,10 @@ class AddItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "BillId":"75125",
-            "ProductId": "777",
-            "Quantity":""
+            BillId: this.props.billId,
+            ProductId: 771,
+            Quantity: null,
+            Products: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -17,15 +18,28 @@ class AddItem extends React.Component {
 
     }
 
-    onSubmit(event) {
+    componentDidMount() {
+        axios.get('http://www.fulek.com/nks/api/aw/products/1').then(res => this.setState({ Products: res.data })).catch(error => console.log(error));
+    }
+
+    async onSubmit(event) {
         event.preventDefault();
-        axios.post("http://www.fulek.com/nks/api/aw/addcustomer",
-            this.state,
+        const item = {
+            BillId: this.state.BillId,
+            ProductId: this.state.ProductId,
+            Quantity: this.state.Quantity,
+        }
+        console.log(item);
+        axios.post("http://www.fulek.com/nks/api/aw/additem",
+        item,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('token')
                 }
-            }).then(response => { console.log(response.data) }).catch(error => console.log(error));
+            }).then(response => { console.log(response.data) })
+            .then(await new Promise(r => setTimeout(r, 400)))
+            .then(this.props.refresh)
+            .catch(error => console.log(error));
     }
 
     handleChange(event) {
@@ -36,15 +50,19 @@ class AddItem extends React.Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <label>Name</label>
-                <input type="text" name="Name" value={this.state.name} onChange={this.handleChange}></input>
-                <label>Surname</label>
-                <input type="text" name="Surname" value={this.state.name} onChange={this.handleChange}></input>
-                <label>Email</label>
-                <input type="text" name="Email" value={this.state.name} onChange={this.handleChange}></input>
-                <label>Telephone</label>
-                <input type="text" name="Telephone" value={this.state.name} onChange={this.handleChange}></input>
-                <input type="submit" value="Add"></input>
+                <div className="input-container">
+                    <input className="input" placeholder="Quantity" type="number" name="Quantity" value={this.state.Quantity} onChange={this.handleChange}></input>
+                    <select className="input" name="ProductId" value={this.state.ProductId} onChange={this.handleChange}>
+                        {
+                            this.state.Products.map(product => (
+                                <option key={product.Id} value={product.Id}>
+                                    {product.Name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                    <input class="submit" type="submit" value="Add"></input>
+                </div>
             </form>
         );
     }
