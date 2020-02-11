@@ -74,18 +74,18 @@ class AddBill extends React.Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="input-container">
-                <input className="input" placeholder="Bill Number" type="text" name="BillNumber" value={this.state.name} onChange={this.handleChange}></input>
-                <input className="input" placeholder="Comment" type="text" name="Comment" value={this.state.name} onChange={this.handleChange}></input>
-                <select className="input" name="SellerId" value={this.state.SellerId} onChange={this.handleChange}>
-                    {
-                        this.state.Sellers.map(seller => (
-                            <option key={seller.Id} value={seller.Id}>
-                                {seller.Name} {seller.Surname}
-                            </option>
-                        ))
-                    }
-                </select>
-                <input class="submit" type="submit" value="Add"></input>
+                    <input className="input" placeholder="Bill Number" type="text" name="BillNumber" value={this.state.name} onChange={this.handleChange}></input>
+                    <input className="input" placeholder="Comment" type="text" name="Comment" value={this.state.name} onChange={this.handleChange}></input>
+                    <select className="input" name="SellerId" value={this.state.SellerId} onChange={this.handleChange}>
+                        {
+                            this.state.Sellers.map(seller => (
+                                <option key={seller.Id} value={seller.Id}>
+                                    {seller.Name} {seller.Surname}
+                                </option>
+                            ))
+                        }
+                    </select>
+                    <input class="submit" type="submit" value="Add"></input>
                 </div>
             </form>
         );

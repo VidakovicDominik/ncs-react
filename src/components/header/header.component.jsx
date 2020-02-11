@@ -35,7 +35,7 @@ class Header extends React.Component {
                 {
                     localStorage.getItem('token') ? (<button class="ll input" onClick={this.showLogin}>Logout</button>) : (<button class="ll input" onClick={this.showLogin}>Login</button>)
                 }
-                <ReactModal
+                <ReactModal className="modal"
                     isOpen={this.state.showLoginModal}
                     contentLabel="onRequestClose Example"
                     onRequestClose={this.hideLogin}

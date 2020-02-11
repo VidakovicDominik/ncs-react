@@ -27,7 +27,7 @@ class Login extends React.Component {
             .then(body => {
                 localStorage.setItem('token', body.token);
                 this.props.updateUser(body.username);
-            }).catch(error=>localStorage.clear());
+            }).catch(error => localStorage.clear());
 
     }
 
@@ -45,21 +45,21 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
-                <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-                <button onClick={this.login}>Login</button>
-                <button onClick={this.showRegister}>Register</button>
-                <ReactModal
-                    isOpen={this.state.showRegisterModal}
-                    contentLabel="onRequestClose Example"
-                    onRequestClose={this.hideRegister}
-                    shouldCloseOnOverlayClick={true}>
-                    <Register />
-                    <button onClick={this.hideRegister}>Close Modal</button>
-                </ReactModal>
-                {this.state.loginSuccess ? <label>Successfully logged in</label> : ''}
-            </div>
+                <div className="login-container">
+                    <h2>Login</h2>
+                    <input className="login-input" placeholder="Username" type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                    <input className="login-input" placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                    <button className="login-submit" onClick={this.login}>Login</button>
+                    <button className="login-submit" onClick={this.showRegister}>Register</button>
+                    <ReactModal className="register-modal"
+                        isOpen={this.state.showRegisterModal}
+                        contentLabel="onRequestClose Example"
+                        onRequestClose={this.hideRegister}
+                        shouldCloseOnOverlayClick={true}>
+                        <Register />
+                    </ReactModal>
+                    {this.state.loginSuccess ? <label>Successfully logged in</label> : ''}
+                </div>
         );
     }
 }

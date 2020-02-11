@@ -39,12 +39,13 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="register-container">
+                <h2>Register</h2>
                 <form onSubmit={this.register}>
-                    <input type="text" name="name" value={this.state.name} onChange={this.handleChange}></input>
-                    <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-                    <input type="submit" value="Register"/>
+                    <input className="register-input" placeholder="Name" type="text" name="name" value={this.state.name} onChange={this.handleChange}></input>
+                    <input className="register-input" placeholder="Username" type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                    <input className="register-input" placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                    <input className="register-submit" type="submit" value="Register"/>
                 </form>
                 {this.state.lastRegistrationSuccess ? <label>Successfully registered</label>: ''}
                 {this.state.lastRegistrationFail ? <label>{this.state.lastRegistrationFail}</label>: ''}
